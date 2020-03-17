@@ -41,7 +41,7 @@
 4.1. 安装 sudo apt-get install libncursesw5 libncursesw5-dev
 4.2. 使用setlocale函数设置locale   setlocale(LC_ALL,"");
 4.3. 编译   g++ sudo.o main.o -lncursesw -o main    使用-lncursesw链接
-5. sleep()函数：在头文件 unistd.h 中
+5. sleep()函数：在头文件 unistd.h 中ds
 6. Linux中vim粘贴省略缩进：在vim中输入:set paste
 7. 类中数据成员的初始化问题：因为没有对curtable初始话，导致生成地图有误。
 8. 位置初始化：因为使用judgeans()导致当前光标移动，在跳出此函数时需要光标回到此位置。
