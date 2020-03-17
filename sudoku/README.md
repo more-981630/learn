@@ -47,5 +47,5 @@
 8. 位置初始化：因为使用judgeans()导致当前光标移动，在跳出此函数时需要光标回到此位置。
 9. addch()函数：在添加字符之后光标向后移动一个，为了光标导航，需要光标调回原位置，即减一回到原位置。
 10. 删除字符剩余加一：游戏的输赢规则是根据剩余未填个数判断，当清空一个单元格的数字时，剩余字符加一。
-&emsp;
-**原文连接：[https://blog.csdn.net/weixin_43855330/article/details/104260159](https://blog.csdn.net/weixin_43855330/article/details/104260159)
+## 原文连接
+&emsp;&emsp;**原文连接：[https://blog.csdn.net/weixin_43855330/article/details/104260159](https://blog.csdn.net/weixin_43855330/article/details/104260159)**
