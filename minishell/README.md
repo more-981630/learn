@@ -42,3 +42,5 @@
 &emsp;&emsp;目前仅支持外部命令和个别内部命令，可以扩展更多内部命令。
 &emsp;&emsp;信号事件待改进，可以让minishell终端忽略SIGINT、SIGQUIT、SIGTSTP三个信号，让其子进程执行相应的事件。
 &emsp;&emsp;命令不能自动补全，可以采用读取单字符的方式获取已经输入的字符，根据已经输入的字符到系统中寻找对应的命令。
+### 原文链接
+&emsp;&emsp;[https://blog.csdn.net/weixin_43855330/article/details/104703109](https://blog.csdn.net/weixin_43855330/article/details/104703109)
