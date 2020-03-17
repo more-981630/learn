@@ -1,0 +1,49 @@
+
+//dshaudhaj
+//dshaudhaj
+//dshaudhaj
+//dshaudhaj
+//DShAUDHaJ
+://img-blog.csdnimg.cn/20200212141915291.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg1NTMzMA==,size_16,color_FFFFFF,t_70#pic_center)
+
+&emsp;&emsp;数独盘面是个九宫，每一宫又分为九个小格。在这八十一格中给出一定的已知数字和解题条件，利用逻辑和推理，在其他的空格上填入1\~9的数字。使1\~9每个数字在每一行、每一列和每一宫中都只出现一次，所以又称九宫格。
+## 设计思路
+&emsp;&emsp;为了确保游戏能够正确的玩，即生成有效的地图。我将游戏的制作分成了两部分，游戏算法设计和文字界面设计。游戏算法设计是为了保证能生成有效地图，确保玩家玩的游戏有解。文字界面设计是为了让此游戏更美观，让玩家玩起了更舒适。
+### 算法实现
+&emsp;&emsp;为了确保生成有效地图，我将地图的9个宫进行标记。![在这里插入图片描述](https://img-blog.csdnimg.cn/20200212144522117.png#pic_center)
+&emsp;&emsp;按以下的算法生成有效的地图：
+1. 首先生成9*9的全排列，存储起来。存储方式采用char **initable;
+2. 生成一个在0~initable.size()-1之间的随机数，排放在'1'位置。
+3. 根据'1'位置，找出符合的'2'位置的数量，将下标放入vector<int> query;
+4. 生成一个在0~query.size()-1之间的随机数，在initable中查找并放入'2'位置，清空query;
+5. 根据'1'、'2'位置找出符合'3'位置的个数，将下标放入query;
+6. 生成一个在0~query.size()-1之间的随机数，在initable中查找并放入3位置，清空query;
+7. 同理找出'4'、'7'位置
+8. 根据'2'与'4'的位置找出符合'5'位置的个数，放入query;
+9. 生成一个在0~query.size()-1之间的随机数，在initable中查找并放入'5'位置，清空query;
+10. 根据'3'、'4'、'5'确定'6'的位置的个数，放入vector<int>query1;如果query1为空，返回第9步。否则执行第11步
+11. 根据'2'、'5'、'7'确定'8'的位置的个数，放入vector<int>query2;如果query2为空，返回第9步。否则执行第12步
+12. 对query1与query2进行嵌套循环，采用dfs查询在'9'的位置是否存在符合游戏规则的答案，如果没有符合规则的地图返回第2步。
+### 文字界面
+&emsp;&emsp;因为第一次做项目，对于文字界面完全是个小白，所以在开始项目的第一天我先学习了Linux的ncurses库。笔记链接：[Linux下curses函数库的详细介绍](https://blog.csdn.net/weixin_43855330/article/details/104219924)
+&emsp;&emsp;利用ncurses库设计了游戏界面，控制好光标即可，其他没什么好介绍的，看游戏源码即可。
+## 总结
+&emsp;&emsp;经过两天的努力，完成从设计到开发的全部过程，成果可见。游戏开发创新之处在于算法的设计，抛弃传统的随机地图生成算法，提出新的有效地图生成算法，新的算法速度可观，可在很快的时间内生成一副有效地图。
+&emsp;&emsp;为了减少单个有效地图生成的时间，我将排列表的生成放在了init()函数内，其原因是生成排列表的时间在30ms以内，玩家按下s或着q的时间内，这个排列表已经完成。
+&emsp;&emsp;因为第一次开发项目，对扩展性不太了解，所以这个游戏的可扩展性很差，目前我了解到一些提高可扩展性的方法，其中模板机智、常量定义等都是常用的方法。
+&emsp;&emsp;游戏开发体会：对于算法问题需要仔细的思考；对于技术问题，需要认真的学习；对于代码，需要多加注释。
+## 遇到的问题
+&emsp;&emsp;在开发的过程中遇到了不少问题，汇总如下：
+1. static的理解：static的生命周期是进程。
+2. vector越界：代码中：0\~query.size(); VS报错：vector subscript out of range。更改为：0\~query.size()-1;
+3. 数组越界原因：由于定义char table[11][11]，访问table[14][14]导致越界，错误提示：_Run-Time Check Failure #2 - Stack around the variable 's' was corrupted._
+4. ncurses中文字符使用：
+4.1. 安装 sudo apt-get install libncursesw5 libncursesw5-dev
+4.2. 使用setlocale函数设置locale   setlocale(LC_ALL,"");
+4.3. 编译   g++ sudo.o main.o -lncursesw -o main    使用-lncursesw链接
+5. sleep()函数：在头文件 unistd.h 中
+6. Linux中vim粘贴省略缩进：在vim中输入:set paste
+7. 类中数据成员的初始化问题：因为没有对curtable初始话，导致生成地图有误。
+8. 位置初始化：因为使用judgeans()导致当前光标移动，在跳出此函数时需要光标回到此位置。
+9. addch()函数：在添加字符之后光标向后移动一个，为了光标导航，需要光标调回原位置，即减一回到原位置。
+10. 删除字符剩余加一：游戏的输赢规则是根据剩余未填个数判断，当清空一个单元格的数字时，剩余字符加一。 /dshaudhaj
